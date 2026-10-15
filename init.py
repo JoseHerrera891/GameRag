@@ -6,7 +6,7 @@ load_dotenv()
 client = MongoClient(os.getenv("MONGODB_URI"))
 db = client["catalogo_videojuegos"]
 
-# ---------- 1. Colecciones con schema validation ----------
+#validacion shema
 esquemas = {
     "documentos": {
         "bsonType": "object",
@@ -49,7 +49,7 @@ for nombre, esquema in esquemas.items():
     else:
         print(f"Ya existe: {nombre}")
 
-# ---------- 2. Índices ----------
+# indices 
 db.documentos.create_index([("fecha", ASCENDING), ("idioma", ASCENDING)], name="idx_fecha_idioma")
 db.documentos.create_index([("contenido_texto", TEXT)], name="idx_texto")
 db.chunks.create_index([("doc_id", ASCENDING), ("estrategia_chunking", ASCENDING)], name="idx_doc_estrategia")
